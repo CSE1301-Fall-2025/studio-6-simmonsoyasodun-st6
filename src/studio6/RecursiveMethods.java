@@ -29,8 +29,15 @@ public class RecursiveMethods {
 	 * @param radiusMinimumDrawingThreshold radius above which drawing should occur
 	 */
 	public static void circlesUponCircles(double xCenter, double yCenter, double radius, double radiusMinimumDrawingThreshold) {
-		
-		// FIXME complete the recursive drawing
+		if(radius<radiusMinimumDrawingThreshold){
+			return;
+		} else {
+			StdDraw.circle(xCenter, yCenter, radius);
+			circlesUponCircles((xCenter - radius), yCenter, radius/3.0, radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, (yCenter+radius), radius/3.0, radiusMinimumDrawingThreshold);
+			circlesUponCircles((xCenter + radius), yCenter, radius/3.0, radiusMinimumDrawingThreshold);
+			circlesUponCircles(xCenter, (yCenter-radius), radius/3.0, radiusMinimumDrawingThreshold);
+		}
 	}
 	
 
@@ -40,10 +47,20 @@ public class RecursiveMethods {
 	 * @param array the array to create a reverse of, not to be mutated
 	 * @return an array with the same data as the input but it reverse order
 	 */
+	public static int[] toReversedHelper(int[] array, int[] reversed, int idx, int ridx){
+		if (idx > ridx) {
+			return reversed;
+		}
+		reversed[idx] = array[ridx];
+		reversed[ridx] = array[idx];
+		return toReversedHelper(array, reversed, idx + 1, ridx - 1);
+	}
 	public static int[] toReversed(int[] array) {
-		
-			// FIXME create a helper method that can recursively reverse the given array
-			return new int[0];
+		int[] reversed = new int[array.length];
+		int idx = 0;
+		int ridx = array.length-1;
+		// FIXME create a helper method that can recursively reverse the given array
+			return toReversedHelper(array, reversed, idx, ridx);
 		
 	}
 
